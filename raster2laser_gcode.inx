@@ -17,7 +17,8 @@
 	<!-- Titolo e descrizione -->
 	<param name="Title" type="description">Raster 2 Laser GCode generator</param>
 	<param name="Description" type="description">created by 305 Engineering</param>
-    
+    <param name="tabs" type="notebook">
+        <page name="main" gui_text="Main">
 	<!-- Opzioni di esportazione dell'immagine -->
 	<param name="directory" type="string"  gui-text="Export directory"></param>
 	<param name="filename" type="string"  gui-text="File Name"></param>
@@ -74,21 +75,25 @@
 	
 	<!-- FLIP = coordinate Cartesiane (False) Coordinate "informatiche" (True) -->
 	<param name="flip_y" type="boolean" gui-text="Flip Y">false</param>
-
-	<!-- Homing -->
-	<param name="homing" type="enum" gui-text="Homing ?">
-		<_item value="1">G28 (Standard)</_item>
-		<_item value="2">$H (GRBL)</_item>
-		<_item value="3">No Homing</_item>
-	</param>
-	
-	<param name="laseron" type="string"  gui-text="Laser ON Command">M03</param>
-	<param name="laseroff" type="string"  gui-text="Laser OFF Command">M05</param>
 	
 	<!-- Anteprima = Solo immagine BN -->
 	<param name="preview_only" type="boolean" gui-text="Preview only">false</param>
 	<param name="p_only" type="description">If "Preview only" is true the gcode file will not be generated.</param>
-
+    </page>
+    <page name="post" gui_text="Post config">
+        <param name="post_pre" type="string"  gui-text="Preamble">G21{N}G90{N}</param>
+        <param name="post_on" type="string"  gui-text="Laser on"></param>
+        <param name="post_detached_on" type="boolean" gui-text="Detached (new line) ON">true</param>
+        <param name="post_off" type="string"  gui-text="Laser off"></param>
+        <param name="post_detached_off" type="boolean" gui-text="Detached (new line) OFF">true</param>
+	<param name="post_intens" type="string"  gui-text="Intensity"></param>
+        <param name="post_detached_intens" type="boolean" gui-text="Detached (new line) intensity">true</param>
+        <param name="post_feed" type="string"  gui-text="Feed move"></param>
+        <param name="post_rapid" type="string"  gui-text="Rapid move"></param>
+        <param name="post_footer" type="string"  gui-text="Footer">M05{N}M02{N}{N}</param>
+        <param name="post_suffix" type="string"  gui-text="Filename suffix (extension)"></param>
+    </page>
+    </param>
 
 	<!-- Per togliere la casella Antepima diretta bisogna sostituire <effect> con <effect needs-live-preview="false">  -->
 	<!-- <effect> -->
