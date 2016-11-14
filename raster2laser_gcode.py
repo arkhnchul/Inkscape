@@ -207,8 +207,10 @@ class GcodeExport(inkex.Effect):
 			DPI = 50.8
 		elif self.options.resolution == 5:
 			DPI = 127
-		else:
+		elif self.options.resolution == 10:
 			DPI = 254
+		else:
+			DPI = 512
 
 		command="inkscape -C -e \"%s\" -b\"%s\" %s -d %s" % (pos_file_png_exported,bg_color,current_file,DPI) #Comando da linea di comando per esportare in PNG
 					
@@ -482,42 +484,61 @@ class GcodeExport(inkex.Effect):
 							if matrice_BN[y][x] == N :
 								if Laser_ON == False :
 									#file_gcode.write('G00 X' + str(float(x)/Scala) + ' Y' + str(float(y)/Scala) + ' F' + str(F_G00) + '\n')
-									file_gcode.write(self.post_subst_move(post_rapid,xstr,ystr) + '\n') #tolto il Feed sul G00
+									file_gcode.write(self.post_subst_move(post_rapid,xstr,ystr)) #tolto il Feed sul G00
 									if(detached_on):
-									    file_gcode.write(pre_on + '\n')
+									    file_gcode.write('\n')
+									else:
+									    file_gcode.write(' ')
+									file_gcode.write(pre_on + '\n')
 									Laser_ON = True
 								if  Laser_ON == True :   #DEVO evitare di uscire dalla matrice
 									if x == w-1 :
-										file_gcode.write(self.post_subst_move(post_feed,xstr,ystr) + '\n')
+										file_gcode.write(self.post_subst_move(post_feed,xstr,ystr))
 										if(detached_off):
-										    file_gcode.write(pre_off + '\n')
+										    file_gcode.write('\n')
+										else:
+										    file_gcode.write(' ')
+										file_gcode.write(pre_off + '\n')
 										Laser_ON = False
 									else: 
 										if matrice_BN[y][x+1] != N :
-											file_gcode.write(self.post_subst_move(post_feed,xstr,ystr) +'\n')
+											file_gcode.write(self.post_subst_move(post_feed,xstr,ystr))
 											if(detached_off):
-											    file_gcode.write(pre_off + '\n')
+											    file_gcode.write('\n')
+											else:
+											    file_gcode.write(' ')
+											file_gcode.write(pre_off + '\n')
 											Laser_ON = False
 					else:
 						for x in reversed(range(w)):
+							xstr=str(float(x)/Scala)
 							if matrice_BN[y][x] == N :
 								if Laser_ON == False :
 									#file_gcode.write('G00 X' + str(float(x)/Scala) + ' Y' + str(float(y)/Scala) + ' F' + str(F_G00) + '\n')
-									file_gcode.write(self.post_subst_move(post_rapid,xstr,ystr) + '\n') #tolto il Feed sul G00
+									file_gcode.write(self.post_subst_move(post_rapid,xstr,ystr)) #tolto il Feed sul G00
 									if(detached_on):
-									    file_gcode.write(pre_on + '\n')
+									    file_gcode.write('\n')
+									else:
+									    file_gcode.write(' ')
+									file_gcode.write(pre_on + '\n')
 									Laser_ON = True
 								if  Laser_ON == True :   #DEVO evitare di uscire dalla matrice
 									if x == 0 :
-										file_gcode.write(self.post_subst_move(post_feed,xstr,ystr) + '\n')
+										file_gcode.write(self.post_subst_move(post_feed,xstr,ystr))
 										if(detached_off):
-										    file_gcode.write(pre_off + '\n')
+										    file_gcode.write('\n')
+										else:
+										    file_gcode.write(' ')
+										file_gcode.write(pre_off + '\n')
 										Laser_ON = False
 									else: 
 										if matrice_BN[y][x-1] != N :
-											file_gcode.write(self.post_subst_move(post_feed,xstr,ystr) +'\n')
+											file_gcode.write(self.post_subst_move(post_feed,xstr,ystr))
 											if(detached_off):
-											    file_gcode.write(pre_off + '\n')
+											    file_gcode.write('\n')
+											else:
+											    file_gcode.write(' ')
+											file_gcode.write(pre_off + '\n')
 											Laser_ON = False				
 
 			else: ##SCALA DI GRIGI
